@@ -56,7 +56,9 @@ class DMSDocument extends DataObject implements DMSDocumentInterface {
 	}
 	
 	
-	
+	private static $create_table_options = array(
+		'MySQLDatabase' => 'ENGINE=MyISAM'
+	);
 
 	/**
 	 * Associates this document with a Page. This method does nothing if the association already exists.
