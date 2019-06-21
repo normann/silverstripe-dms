@@ -1,4 +1,12 @@
 <?php
+
+namespace SilverStripe\DMS\Admin;
+
+use SilverStripe\Core\Extension;
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\HiddenField;
+use SilverStripe\DMS\DMS;
+
 /**
  * Extends the original toolbar with document picking capability - modified lines are commented.
  */

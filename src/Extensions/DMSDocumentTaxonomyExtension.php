@@ -1,5 +1,14 @@
 <?php
 
+namespace SilverStripe\DMS\Extensions;
+
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\ListboxField;
+use SilverStripe\Taxonomy\TaxonomyTerm;
+use SilverStripe\Core\Config\Config;
+
+
 class DMSDocumentTaxonomyExtension extends DataExtension
 {
     private static $many_many = array(

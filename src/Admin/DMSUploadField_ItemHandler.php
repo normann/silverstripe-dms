@@ -1,6 +1,13 @@
 <?php
 
-class DMSUploadField_ItemHandler extends UploadField_ItemHandler
+namespace SilverStripe\DMS\Admin;
+
+use SilverStripe\Control\RequestHandler;
+use SilverStripe\DMS\Model\DMSDocument;
+use SilverStripe\Forms\Form;
+
+
+class DMSUploadField_ItemHandler extends RequestHandler
 {
     private static $allowed_actions = array(
         'delete',

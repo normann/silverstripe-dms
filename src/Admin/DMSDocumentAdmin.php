@@ -1,5 +1,14 @@
 <?php
 
+namespace SilverStripe\DMS\Admin;
+
+use SilverStripe\Admin\ModelAdmin;
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\CMS\Model\SiteTree;
+
+
 class DMSDocumentAdmin extends ModelAdmin
 {
     private static $managed_models = array(
@@ -21,7 +30,7 @@ class DMSDocumentAdmin extends ModelAdmin
     /**
      * Remove the default "add" button and replace it with a customised version for DMS
      *
-     * @return CMSForm
+     * @return \SilverStripe\Forms\Form
      */
     public function getEditForm($id = null, $fields = null)
     {
@@ -36,11 +45,11 @@ class DMSDocumentAdmin extends ModelAdmin
      * update the display fields to include some extra columns that are only for this ModelAdmin, so cannot
      * be added directly to the model's display fields.
      *
-     * @param  CMSForm   $form
+     * @param  SilverStripe\Forms\Form $form
      * @param  GridField $gridField
-     * @return CMSForm
+     * @return SilverStripe\Forms\Form
      */
-    protected function modifyGridField(CMSForm $form, GridField $gridField)
+    protected function modifyGridField(Form $form, GridField $gridField)
     {
         $gridFieldConfig = $gridField->getConfig();
 

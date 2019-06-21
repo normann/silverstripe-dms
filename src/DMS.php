@@ -1,4 +1,13 @@
 <?php
+
+namespace SilverStripe\DMS;
+
+use SilverStripe\DMS\Interfaces\DMSInterface;
+use SilverStripe\DMS\Exceptions\FileNotFoundException;
+use SilverStripe\DMS\Model\DMSDocument;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Core\Config\Config;
+
 class DMS implements DMSInterface
 {
     /**

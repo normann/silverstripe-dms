@@ -1,6 +1,16 @@
 <?php
 
-class DMSDocument_Controller extends Controller
+namespace SilverStripe\DMS\Control;
+
+use SilverStripe\Control\Controller;
+use SilverStripe\Versioned\Versioned;
+use SilverStripe\Core\Convert;
+use SilverStripe\ORM\DataObject;
+use InvalidArgumentException;
+use SilverStripe\Control\HTTPRequest;
+
+
+class DMSDocumentController extends Controller
 {
     /**
      * Mode to switch for testing. Does not return document download, just document URL.
@@ -23,7 +33,7 @@ class DMSDocument_Controller extends Controller
      * Returns the document object from the request object's ID parameter.
      * Returns null, if no document found
      *
-     * @param  SS_HTTPRequest $request
+     * @param  HTTPRequest $request
      * @return DMSDocument|null
      */
     protected function getDocumentFromID($request)
@@ -66,7 +76,7 @@ class DMSDocument_Controller extends Controller
      * Access the file download without redirecting user, so we can block direct
      * access to documents.
      */
-    public function index(SS_HTTPRequest $request)
+    public function index(HTTPRequest $request)
     {
         $doc = $this->getDocumentFromID($request);
 

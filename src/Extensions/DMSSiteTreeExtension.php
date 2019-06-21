@@ -1,5 +1,19 @@
 <?php
 
+namespace SilverStripe\DMS\Extensions;
+
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Security\Permission;
+use SilverStripe\Security\Member;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
+use SilverStripe\DMS\Model\DMSDocumentSet;
+use SilverStripe\Dev\Deprecation;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\Versioned\Versioned;
+
+
 /**
  * @package dms
  */

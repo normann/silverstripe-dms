@@ -1,5 +1,15 @@
 <?php
 
+namespace SilverStripe\DMS\Admin;
+
+use SilverStripe\Forms\GridField\GridFieldAddNewButton;
+use SilverStripe\Forms\GridField\GridField_HTMLProvider;
+use SilverStripe\Control\Controller;
+use SilverStripe\DMS\Model\DMSDocumentSet;
+use SilverStripe\CMS\Controllers\CMSPageEditController;
+use SilverStripe\View\ArrayData;
+
+
 class DMSGridFieldAddNewButton extends GridFieldAddNewButton implements GridField_HTMLProvider
 {
     /**

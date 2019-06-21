@@ -1,4 +1,39 @@
 <?php
+
+namespace SilverStripe\DMS\Model;
+
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\GridField\GridFieldConfig;
+use SilverStripe\Forms\GridField\GridFieldButtonRow;
+use SilverStripe\Forms\GridField\GridFieldToolbarHeader;
+use SilverStripe\Forms\GridField\GridFieldFilterHeader;
+use SilverStripe\Forms\GridField\GridFieldSortableHeader;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\DMS\Admin\DMSGridFieldEditButton;
+use SilverStripe\Forms\GridField\GridFieldDeleteAction;
+use SilverStripe\Forms\GridField\GridFieldDetailForm;
+use SilverStripe\Forms\GridField\GridFieldPaginator;
+//use GridFieldSortableRows;
+use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
+use SilverStripe\CMS\Controllers\CMSPageEditController;
+use SilverStripe\Control\Controller;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\DMS\Admin\DMSGridFieldAddNewButton;
+use SilverStripe\Forms\HiddenField;
+use SilverStripe\DMS\DMS;
+use SilverStripe\View\Requirements;
+use SilverStripe\Security\Member;
+use SilverStripe\Forms\ListboxField;
+use SilverStripe\DMS\Forms\DMSJsonField;
+use SilverStripe\Forms\FieldGroup;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Core\Convert;
+use SilverStripe\ORM\DataList;
+use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\Security\Permission;
+
 /**
  * A document set is attached to Pages, and contains many DMSDocuments
  *
@@ -103,18 +138,14 @@ class DMSDocumentSet extends DataObject
                         new GridFieldDetailForm()
                     );
 
-                if (class_exists('GridFieldPaginatorWithShowAll')) {
-                    $paginatorComponent = new GridFieldPaginatorWithShowAll(15);
-                } else {
-                    $paginatorComponent = new GridFieldPaginator(15);
-                }
+                $paginatorComponent = new GridFieldPaginator(15);
                 $gridFieldConfig->addComponent($paginatorComponent);
 
-                if (class_exists('GridFieldSortableRows')) {
-                    $gridFieldConfig->addComponent(new GridFieldSortableRows('DocumentSort'));
-                } elseif (class_exists('GridFieldOrderableRows')) {
-                    $gridFieldConfig->addComponent(new GridFieldOrderableRows('DocumentSort'));
-                }
+//                if (class_exists('GridFieldSortableRows')) {
+//                    $gridFieldConfig->addComponent(new GridFieldSortableRows('DocumentSort'));
+//                } elseif (class_exists('GridFieldOrderableRows')) {
+                $gridFieldConfig->addComponent(new GridFieldOrderableRows('DocumentSort'));
+//                }
 
                 // Don't show which page this is if we're already editing within a page context
                 if (Controller::curr() instanceof CMSPageEditController) {
@@ -305,7 +336,7 @@ class DMSDocumentSet extends DataObject
      */
     protected function addEmbargoConditions(DataList $documents)
     {
-        $now = SS_Datetime::now()->Rfc2822();
+        $now = DBDatetime::now()->Rfc2822();
 
         return $documents->where(
             "\"EmbargoedIndefinitely\" = 0 AND "
@@ -348,7 +379,7 @@ class DMSDocumentSet extends DataObject
         );
     }
 
-    protected function validate()
+    public function validate()
     {
         $result = parent::validate();
 
@@ -367,7 +398,7 @@ class DMSDocumentSet extends DataObject
         return $this->getGlobalPermission($member);
     }
 
-    public function canCreate($member = null)
+    public function canCreate($member = null, $context = array())
     {
         $extended = $this->extendedCan(__FUNCTION__, $member);
         if ($extended !== null) {

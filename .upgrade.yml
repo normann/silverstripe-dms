@@ -1,0 +1,25 @@
+mappings:
+  DMSDocumentSet: SilverStripe\DMS\Model\DMSDocumentSet
+  DMSDocument_versions: SilverStripe\DMS\Model\DMSDocument_versions
+  DMSDocument: SilverStripe\DMS\Model\DMSDocument
+  DMSJsonField: SilverStripe\DMS\Forms\DMSJsonField
+  DMSGridFieldAddNewButton: SilverStripe\DMS\Admin\DMSGridFieldAddNewButton
+  DMSDocumentAddController: SilverStripe\DMS\Admin\DMSDocumentAddController
+  DMSDocumentAdmin: SilverStripe\DMS\Admin\DMSDocumentAdmin
+  DMSUploadField: SilverStripe\DMS\Admin\DMSUploadField
+  DMSUploadField_ItemHandler: SilverStripe\DMS\Admin\DMSUploadField_ItemHandler
+  DMSGridFieldEditButton: SilverStripe\DMS\Admin\DMSGridFieldEditButton
+  DocumentHtmlEditorFieldToolbar: SilverStripe\DMS\Admin\DocumentHtmlEditorFieldToolbar
+  DMSGridFieldDetailForm_ItemRequest: SilverStripe\DMS\Admin\DMSGridFieldDetailForm_ItemRequest
+  DMSDocumentAddExistingField: SilverStripe\DMS\Admin\DMSDocumentAddExistingField
+  DMSDocumentInterface: SilverStripe\DMS\Interfaces\DMSDocumentInterface
+  DMSInterface: SilverStripe\DMS\Interfaces\DMSInterface
+  DMSDocumentTaxonomyExtension: SilverStripe\DMS\Extensions\DMSDocumentTaxonomyExtension
+  DMSSiteTreeExtension: SilverStripe\DMS\Extensions\DMSSiteTreeExtension
+  DMSTaxonomyTypeExtension: SilverStripe\DMS\Extensions\DMSTaxonomyTypeExtension
+  MigrateToDocumentSetsTask: SilverStripe\DMS\Tasks\MigrateToDocumentSetsTask
+  DMS: SilverStripe\DMS\DMS
+  FileNotFoundException: SilverStripe\DMS\Exceptions\FileNotFoundException
+  DMSDocument_Controller: SilverStripe\DMS\Control\DMSDocumentController
+  DMSShortcodeHandler: SilverStripe\DMS\Tools\DMSShortcodeHandler
+  ShortCodeRelationFinder: SilverStripe\DMS\Tools\ShortCodeRelationFinder

@@ -1,5 +1,27 @@
 <?php
 
+namespace SilverStripe\DMS\Admin;
+
+use SilverStripe\Admin\LeftAndMain;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\DMS\Model\DMSDocumentSet;
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TabSet;
+use SilverStripe\Forms\Tab;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\HiddenField;
+use SilverStripe\Control\Controller;
+use SilverStripe\View\ArrayData;
+use SilverStripe\CMS\Controllers\CMSPageEditController;
+use SilverStripe\Core\Convert;
+use SilverStripe\DMS\Model\DMSDocument;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Security\Member;
+use SilverStripe\Security\Permission;
+
+
 /**
  * @package dms
  */

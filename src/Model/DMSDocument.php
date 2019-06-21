@@ -1,5 +1,51 @@
 <?php
 
+namespace SilverStripe\DMS\Model;
+
+use SilverStripe\ORM\DataObject;
+use SilverStripe\DMS\Interfaces\DMSDocumentInterface;
+use SilverStripe\Security\Member;
+use SilverStripe\Security\Permission;
+use SilverStripe\ORM\DB;
+use SilverStripe\View\Parsers\URLSegmentFilter;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
+use SilverStripe\Versioned\Versioned;
+use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\ORM\FieldType\DBField;
+use Exception;
+use SilverStripe\DMS\DMS;
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\DMS\Tools\ShortCodeRelationFinder;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\OptionsetField;
+use SilverStripe\DMS\Admin\DMSUploadField;
+use SilverStripe\Forms\GridField\GridFieldConfig;
+use SilverStripe\Forms\GridField\GridFieldToolbarHeader;
+use SilverStripe\Forms\GridField\GridFieldSortableHeader;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\Forms\GridField\GridFieldPaginator;
+use SilverStripe\Forms\GridField\GridFieldDetailForm;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\DatetimeField;
+use SilverStripe\Forms\FieldGroup;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\CompositeField;
+use SilverStripe\Assets\File;
+use SilverStripe\Forms\ReadonlyField;
+use SilverStripe\Forms\DateField_Disabled;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
+use SilverStripe\DMS\Admin\DMSGridFieldEditButton;
+use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
+use SilverStripe\Core\Convert;
+
+
 /**
  * @package dms
  *
@@ -36,8 +82,8 @@ class DMSDocument extends DataObject implements DMSDocumentInterface
         "ViewCount" => 'Int',
         "EmbargoedIndefinitely" => 'Boolean(false)',
         "EmbargoedUntilPublished" => 'Boolean(false)',
-        "EmbargoedUntilDate" => 'SS_DateTime',
-        "ExpireAtDate" => 'SS_DateTime',
+        "EmbargoedUntilDate" => 'Datetime',
+        "ExpireAtDate" => 'Datetime',
         "DownloadBehavior" => 'Enum(array("open","download"), "download")',
         "CanViewType" => "Enum('Anyone, LoggedInUsers, OnlyTheseUsers', 'Anyone')",
         "CanEditType" => "Enum('LoggedInUsers, OnlyTheseUsers', 'LoggedInUsers')",
@@ -175,7 +221,7 @@ class DMSDocument extends DataObject implements DMSDocumentInterface
      *
      * @return boolean
      */
-    public function canCreate($member = null)
+    public function canCreate($member = null , $context = array())
     {
         if (!$member || !(is_a($member, 'Member')) || is_numeric($member)) {
             $member = Member::currentUser();
@@ -362,7 +408,7 @@ class DMSDocument extends DataObject implements DMSDocumentInterface
         } elseif ($this->EmbargoedUntilPublished) {
             $embargoed = true;
         } elseif (!empty($this->EmbargoedUntilDate)) {
-            if (SS_Datetime::now()->Value < $this->EmbargoedUntilDate) {
+            if (DBDatetime::now()->Value < $this->EmbargoedUntilDate) {
                 $embargoed = true;
             }
         }
@@ -381,7 +427,7 @@ class DMSDocument extends DataObject implements DMSDocumentInterface
      */
     public function embargoUntilDate($datetime, $write = true)
     {
-        $this->EmbargoedUntilDate = DBField::create_field('SS_Datetime', $datetime)->Format('Y-m-d H:i:s');
+        $this->EmbargoedUntilDate = DBField::create_field('DBDatetime', $datetime)->Format('Y-m-d H:i:s');
 
         if ($write) {
             $this->write();
@@ -425,7 +471,7 @@ class DMSDocument extends DataObject implements DMSDocumentInterface
         $expired = false;
 
         if (!empty($this->ExpireAtDate)) {
-            if (SS_Datetime::now()->Value >= $this->ExpireAtDate) {
+            if (DBDatetime::now()->Value >= $this->ExpireAtDate) {
                 $expired = true;
             }
         }
@@ -444,7 +490,7 @@ class DMSDocument extends DataObject implements DMSDocumentInterface
      */
     public function expireAtDate($datetime, $write = true)
     {
-        $this->ExpireAtDate = DBField::create_field('SS_Datetime', $datetime)->Format('Y-m-d H:i:s');
+        $this->ExpireAtDate = DBField::create_field('DBDatetime', $datetime)->Format('Y-m-d H:i:s');
 
         if ($write) {
             $this->write();
@@ -1264,7 +1310,7 @@ class DMSDocument extends DataObject implements DMSDocumentInterface
      *
      * @return ValidationResult
      */
-    protected function validate()
+    public function validate()
     {
         $valid = parent::validate();
 

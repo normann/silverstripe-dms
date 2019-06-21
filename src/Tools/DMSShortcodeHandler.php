@@ -1,5 +1,12 @@
 <?php
 
+namespace SilverStripe\DMS\Tools;
+
+use SilverStripe\View\Parsers\ShortcodeParser;
+use SilverStripe\DMS\Model\DMSDocument;
+use SilverStripe\ErrorPage\ErrorPage;
+
+
 /**
  * Handles replacing `dms_document_link` shortcodes with links to the actual
  * document.

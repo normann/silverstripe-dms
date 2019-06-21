@@ -1,5 +1,22 @@
 <?php
 
+namespace SilverStripe\DMS\Admin;
+
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\DMS\DMS;
+use SilverStripe\DMS\Model\DMSDocument;
+use SilverStripe\DMS\Model\DMSDocumentSet;
+use SilverStripe\Control\HTTPRequest;
+use Exception;
+use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Core\Convert;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\Validator;
+
+
 /**
  * Field for uploading files into a DMSDocument. Replacing the existing file.
  * Not ideally suited for the purpose, as the base implementation
@@ -62,10 +79,10 @@ class DMSUploadField extends UploadField
     /**
      * Action to handle upload of a single file
      *
-     * @param SS_HTTPRequest $request
+     * @param HTTPRequest $request
      * @return string json
      */
-    public function upload(SS_HTTPRequest $request)
+    public function upload(HTTPRequest $request)
     {
         if ($recordId = $request->postVar('ID')) {
             $this->setRecord(DMSDocumentSet::get()->byId($recordId));
@@ -132,7 +149,7 @@ class DMSUploadField extends UploadField
                 // Search for relations that can hold the uploaded files.
                 if ($relationClass = $this->getRelationAutosetClass()) {
                     // Create new object explicitly. Otherwise rely on Upload::load to choose the class.
-                    $fileObject = SS_Object::create($relationClass);
+                    $fileObject = $relationClass::create();
                 }
             }
 
@@ -168,7 +185,7 @@ class DMSUploadField extends UploadField
                 }
             }
         }
-        $response = new SS_HTTPResponse(Convert::raw2json(array($return)));
+        $response = new HTTPResponse(Convert::raw2json(array($return)));
         $response->addHeader('Content-Type', 'text/plain');
         return $response;
     }
@@ -199,7 +216,7 @@ class DMSUploadField extends UploadField
 
     /**
      * @param int $itemID
-     * @return UploadField_ItemHandler
+     * @return DMSUploadField_ItemHandler
      */
     public function getItemHandler($itemID)
     {

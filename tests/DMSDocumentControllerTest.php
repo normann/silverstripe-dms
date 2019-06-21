@@ -8,7 +8,7 @@ class DMSDocumentControllerTest extends SapphireTest
     protected static $fixture_file = 'dmstest.yml';
 
     /**
-     * @var DMSDocument_Controller
+     * @var DMSDocumentController
      */
     protected $controller;
 
@@ -19,7 +19,7 @@ class DMSDocumentControllerTest extends SapphireTest
         Config::inst()->update('DMS', 'folder_name', 'assets/_unit-test-123');
         $this->logInWithPermission('ADMIN');
 
-        $this->controller = $this->getMockBuilder('DMSDocument_Controller')
+        $this->controller = $this->getMockBuilder('DMSDocumentController')
             ->setMethods(array('sendFile'))
             ->getMock();
     }

@@ -1,4 +1,11 @@
 <?php
+
+namespace SilverStripe\DMS\Extensions;
+
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Taxonomy\TaxonomyType;
+
 /**
  * Creates default taxonomy type records if they don't exist already
  */

@@ -1,4 +1,12 @@
 <?php
+
+namespace SilverStripe\DMS\Tools;
+
+use SilverStripe\ORM\DataList;
+use SilverStripe\DMS\DMS;
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\ORM\DataObject;
+
 /**
  * Finds {@link DataObject} instances using certain shortcodes
  * by fulltext-querying only fields which are capable of parsing shortcodes.

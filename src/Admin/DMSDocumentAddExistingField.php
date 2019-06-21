@@ -1,5 +1,12 @@
 <?php
 
+namespace SilverStripe\DMS\Admin;
+
+use SilverStripe\Forms\CompositeField;
+use SilverStripe\Forms\TreeDropdownField;
+use SilverStripe\View\Requirements;
+
+
 class DMSDocumentAddExistingField extends CompositeField
 {
     public $useFieldContext = true;

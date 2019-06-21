@@ -1,5 +1,12 @@
 <?php
 
+namespace SilverStripe\DMS\Forms;
+
+use SilverStripe\Forms\CompositeField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Core\Convert;
+
+
 /**
  * Combines form inputs into a key-value pair
  */
@@ -95,7 +102,7 @@ class DMSJsonField extends CompositeField
      *
      * @return $this
      */
-    public function setValue($value)
+    public function setValue($value, $data = null)
     {
         $this->value = $value;
         if (is_string($value) && !empty($value)) {

@@ -1,4 +1,14 @@
 <?php
+
+namespace SilverStripe\DMS\Tasks;
+
+use SilverStripe\Dev\BuildTask;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\ORM\Queries\SQLSelect;
+use SilverStripe\DMS\Model\DMSDocument;
+use SilverStripe\DMS\Model\DMSDocumentSet;
+use SilverStripe\Control\Director;
+
 /**
  * This build task helps to migrate DMS data structures from DMS 1.x to 2.x which introduces document sets.
  *
@@ -20,7 +30,7 @@ class MigrateToDocumentSetsTask extends BuildTask
     );
 
     /**
-     * @var SS_HTTPRequest
+     * @var HTTPRequest
      */
     protected $request;
 

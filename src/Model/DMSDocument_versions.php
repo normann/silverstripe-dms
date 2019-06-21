@@ -1,5 +1,15 @@
 <?php
 
+namespace SilverStripe\DMS\Model;
+
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
+use SilverStripe\DMS\DMS;
+use SilverStripe\Assets\File;
+use SilverStripe\ORM\DB;
+
+
 /**
  * DataObject to store versions of uploaded Documents.
  *

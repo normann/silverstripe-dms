@@ -1,4 +1,9 @@
 <?php
+
+namespace SilverStripe\DMS\Interfaces;
+
+use SilverStripe\CMS\Model\SiteTree;
+
 /**
  * When storing a document, the DMS sucks up the file and stores it separately from the assets section.
  * When initializing the DMS, it should create some kind of storage system. For file-based storage, that could be

@@ -1,5 +1,13 @@
 <?php
 
+namespace SilverStripe\DMS\Admin;
+
+use SilverStripe\Forms\GridField\GridFieldEditButton;
+use SilverStripe\Forms\GridField\GridField_ColumnProvider;
+use SilverStripe\View\ArrayData;
+use SilverStripe\Control\Controller;
+
+
 class DMSGridFieldEditButton extends GridFieldEditButton implements GridField_ColumnProvider
 {
 

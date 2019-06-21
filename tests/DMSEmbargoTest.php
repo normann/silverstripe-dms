@@ -12,7 +12,7 @@ class DMSEmbargoTest extends SapphireTest
 
     public function testBasicEmbargo()
     {
-        $oldTestMode = DMSDocument_Controller::$testMode;
+        $oldTestMode = DMSDocumentController::$testMode;
         Config::inst()->update('DMS', 'folder_name', 'assets/_unit-test-123');
 
         $doc = DMS::inst()->storeDocument('dms/tests/DMS-test-lorum-file.pdf');
@@ -20,8 +20,8 @@ class DMSEmbargoTest extends SapphireTest
         $docID = $doc->write();
 
         //fake a request for a document
-        $controller = new DMSDocument_Controller();
-        DMSDocument_Controller::$testMode = true;
+        $controller = new DMSDocumentController();
+        DMSDocumentController::$testMode = true;
         $result = $controller->index($this->createFakeHTTPRequest($docID));
         $this->assertEquals($doc->getFullPath(), $result, 'Correct underlying file returned (in test mode)');
 
@@ -39,7 +39,7 @@ class DMSEmbargoTest extends SapphireTest
             'File no longer returned (in test mode) when switching to other user group'
         );
 
-        DMSDocument_Controller::$testMode = $oldTestMode;
+        DMSDocumentController::$testMode = $oldTestMode;
         DMSFilesystemTestHelper::delete('assets/_unit-test-123');
     }
 
@@ -79,11 +79,11 @@ class DMSEmbargoTest extends SapphireTest
         $this->assertFalse($doc->isEmbargoed(), "Document is not embargoed");
         $this->assertFalse($doc->isExpired(), "Document is not expired");
 
-        SS_Datetime::set_mock_now($expireTime);
+        DBDatetime::set_mock_now($expireTime);
         $this->assertTrue($doc->isHidden(), "Document is hidden");
         $this->assertFalse($doc->isEmbargoed(), "Document is not embargoed");
         $this->assertTrue($doc->isExpired(), "Document is expired");
-        SS_Datetime::clear_mock_now();
+        DBDatetime::clear_mock_now();
 
         $doc->expireAtDate(strtotime('-1 second'));
         $this->assertTrue($doc->isHidden(), "Document is hidden");
@@ -120,12 +120,12 @@ class DMSEmbargoTest extends SapphireTest
         $this->assertTrue($doc->isEmbargoed(), "Document is embargoed");
         $this->assertFalse($doc->isExpired(), "Document is not expired");
 
-        SS_Datetime::set_mock_now($embargoTime);
+        DBDatetime::set_mock_now($embargoTime);
         $this->assertFalse($doc->isHidden(), "Document is not hidden");
         $this->assertFalse($doc->isEmbargoed(), "Document is not embargoed");
         $this->assertFalse($doc->isExpired(), "Document is not expired");
 
-        SS_Datetime::clear_mock_now();
+        DBDatetime::clear_mock_now();
 
         $doc->clearEmbargo();
         $this->assertFalse($doc->isHidden(), "Document is not hidden");

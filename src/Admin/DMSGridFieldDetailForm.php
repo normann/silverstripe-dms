@@ -1,5 +1,11 @@
 <?php
 
+namespace SilverStripe\DMS\Admin;
+
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use SilverStripe\DMS\Tools\ShortCodeRelationFinder;
+
+
 /**
  * Custom ItemRequest class the provides custom delete behaviour for the CMSFields of DMSDocument
  */
