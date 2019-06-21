@@ -7,8 +7,11 @@ use SilverStripe\DMS\Exceptions\FileNotFoundException;
 use SilverStripe\DMS\Model\DMSDocument;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\Assets\File;
+use SilverStripe\DMS\DMS;
 
-class DMS implements DMSInterface
+
+trait DMS
 {
     /**
      * Folder to store the documents in
@@ -100,7 +103,7 @@ class DMS implements DMSInterface
         $filePath = null;
         if (is_string($file)) {
             $filePath = $file;
-        } elseif (is_object($file) && $file->is_a("File")) {
+        } elseif (is_object($file) && $file->is_a(File::class)) {
             $filePath = $file->Filename;
         }
 
@@ -194,6 +197,6 @@ class DMS implements DMSInterface
      */
     public function getShortcodeHandlerKey()
     {
-        return (string) Config::inst()->get('DMS', 'shortcode_handler_key');
+        return (string) Config::inst()->get(DMS::class, 'shortcode_handler_key');
     }
 }

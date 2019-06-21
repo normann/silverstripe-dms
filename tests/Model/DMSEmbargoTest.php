@@ -1,11 +1,34 @@
 <?php
+
+namespace SilverStripe\DMS\Tests\Model;
+
+
+
+use DMSDocumentController;
+
+
+
+
+
+
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\DMS\DMS;
+use SilverStripe\DMS\Tests\DMSFilesystemTestHelper;
+use SilverStripe\DMS\Model\DMSDocument;
+use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Dev\SapphireTest;
+
+
 class DMSEmbargoTest extends SapphireTest
 {
     protected static $fixture_file = 'dmsembargotest.yml';
 
     public function createFakeHTTPRequest($id)
     {
-        $r = new SS_HTTPRequest('GET', 'index/'.$id);
+        $r = new HTTPRequest('GET', 'index/'.$id);
         $r->match('index/$ID');
         return $r;
     }
@@ -13,7 +36,7 @@ class DMSEmbargoTest extends SapphireTest
     public function testBasicEmbargo()
     {
         $oldTestMode = DMSDocumentController::$testMode;
-        Config::inst()->update('DMS', 'folder_name', 'assets/_unit-test-123');
+        Config::inst()->update(DMS::class, 'folder_name', 'assets/_unit-test-123');
 
         $doc = DMS::inst()->storeDocument('dms/tests/DMS-test-lorum-file.pdf');
         $doc->CanViewType = 'LoggedInUsers';
@@ -135,7 +158,7 @@ class DMSEmbargoTest extends SapphireTest
 
     public function testEmbargoUntilPublished()
     {
-        $s1 = $this->objFromFixture('SiteTree', 's1');
+        $s1 = $this->objFromFixture(SiteTree::class, 's1');
 
         $doc = new DMSDocument();
         $doc->Filename = "test file";
@@ -157,26 +180,26 @@ class DMSEmbargoTest extends SapphireTest
 
         $s1->publish('Stage', 'Live');
         $s1->doPublish();
-        $doc = DataObject::get_by_id("DMSDocument", $dID);
+        $doc = DataObject::get_by_id(DMSDocument::class, $dID);
         $this->assertFalse($doc->isHidden(), "Document is not hidden");
         $this->assertFalse($doc->isEmbargoed(), "Document is not embargoed");
         $this->assertFalse($doc->isExpired(), "Document is not expired");
 
         $doc->embargoUntilPublished();
-        $doc = DataObject::get_by_id("DMSDocument", $dID);
+        $doc = DataObject::get_by_id(DMSDocument::class, $dID);
         $this->assertTrue($doc->isHidden(), "Document is hidden");
         $this->assertTrue($doc->isEmbargoed(), "Document is embargoed");
         $this->assertFalse($doc->isExpired(), "Document is not expired");
 
         $doc->embargoIndefinitely();
-        $doc = DataObject::get_by_id("DMSDocument", $dID);
+        $doc = DataObject::get_by_id(DMSDocument::class, $dID);
         $this->assertTrue($doc->isHidden(), "Document is hidden");
         $this->assertTrue($doc->isEmbargoed(), "Document is embargoed");
         $this->assertFalse($doc->isExpired(), "Document is not expired");
 
         $s1->publish('Stage', 'Live');
         $s1->doPublish();
-        $doc = DataObject::get_by_id("DMSDocument", $dID);
+        $doc = DataObject::get_by_id(DMSDocument::class, $dID);
         $this->assertTrue(
             $doc->isHidden(),
             "Document is still hidden because although the untilPublish flag is cleared, the indefinitely flag is there"
@@ -185,7 +208,7 @@ class DMSEmbargoTest extends SapphireTest
         $this->assertFalse($doc->isExpired(), "Document is not expired");
 
         $doc->clearEmbargo();
-        $doc = DataObject::get_by_id("DMSDocument", $dID);
+        $doc = DataObject::get_by_id(DMSDocument::class, $dID);
         $this->assertFalse($doc->isHidden(), "Document is not hidden");
         $this->assertFalse($doc->isEmbargoed(), "Document is not embargoed");
         $this->assertFalse($doc->isExpired(), "Document is not expired");

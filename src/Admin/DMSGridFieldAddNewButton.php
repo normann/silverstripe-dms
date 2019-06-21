@@ -8,6 +8,9 @@ use SilverStripe\Control\Controller;
 use SilverStripe\DMS\Model\DMSDocumentSet;
 use SilverStripe\CMS\Controllers\CMSPageEditController;
 use SilverStripe\View\ArrayData;
+use SilverStripe\DMS\Admin\DMSDocumentAddController;
+use SilverStripe\DMS\Admin\DMSGridFieldAddNewButton;
+
 
 
 class DMSGridFieldAddNewButton extends GridFieldAddNewButton implements GridField_HTMLProvider
@@ -39,7 +42,7 @@ class DMSGridFieldAddNewButton extends GridFieldAddNewButton implements GridFiel
             $this->buttonName = _t('GridField.Add', 'Add {name}', array('name' => $objectName));
         }
 
-        $link = singleton('DMSDocumentAddController')->Link();
+        $link = singleton(DMSDocumentAddController::class)->Link();
         if ($this->getDocumentSetId()) {
             $link = Controller::join_links($link, '?dsid=' . $this->getDocumentSetId());
 
@@ -58,7 +61,7 @@ class DMSGridFieldAddNewButton extends GridFieldAddNewButton implements GridFiel
         ));
 
         return array(
-            $this->targetFragment => $data->renderWith('DMSGridFieldAddNewButton'),
+            $this->targetFragment => $data->renderWith(DMSGridFieldAddNewButton::class),
         );
     }
 

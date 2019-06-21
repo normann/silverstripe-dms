@@ -8,6 +8,9 @@ use SilverStripe\Core\Convert;
 use SilverStripe\ORM\DataObject;
 use InvalidArgumentException;
 use SilverStripe\Control\HTTPRequest;
+use SilverStripe\DMS\Model\DMSDocument_versions;
+use SilverStripe\DMS\Model\DMSDocument;
+
 
 
 class DMSDocumentController extends Controller
@@ -44,11 +47,11 @@ class DMSDocumentController extends Controller
         if (strpos($id, 'version') === 0) {
             // Versioned document
             $id = $this->getDocumentIdFromSlug(str_replace('version', '', $id));
-            $doc = DataObject::get_by_id('DMSDocument_versions', $id);
+            $doc = DataObject::get_by_id(DMSDocument_versions::class, $id);
             $this->extend('updateVersionFromID', $doc, $request);
         } else {
             // Normal document
-            $doc = DataObject::get_by_id('DMSDocument', $this->getDocumentIdFromSlug($id));
+            $doc = DataObject::get_by_id(DMSDocument::class, $this->getDocumentIdFromSlug($id));
             $this->extend('updateDocumentFromID', $doc, $request);
         }
 

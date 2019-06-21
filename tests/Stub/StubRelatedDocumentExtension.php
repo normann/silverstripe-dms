@@ -1,5 +1,16 @@
 <?php
 
+namespace SilverStripe\DMS\Tests\Stub;
+
+
+
+
+use SilverStripe\DMS\Model\DMSDocument;
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Dev\TestOnly;
+
+
+
 /**
  * Class StubRelatedDocumentExtension
  *

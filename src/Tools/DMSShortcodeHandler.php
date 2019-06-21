@@ -13,7 +13,7 @@ use SilverStripe\ErrorPage\ErrorPage;
  *
  * @package dms
  */
-class DMSShortcodeHandler
+trait DMSShortcodeHandler
 {
     public static function handle($arguments, $content, ShortcodeParser $parser, $tag, array $extra = array())
     {

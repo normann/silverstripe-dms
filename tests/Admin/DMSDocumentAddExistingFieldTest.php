@@ -1,5 +1,17 @@
 <?php
 
+namespace SilverStripe\DMS\Tests\Admin;
+
+
+
+
+use SilverStripe\DMS\Admin\DMSDocumentAddExistingField;
+use SilverStripe\Forms\TreeDropdownField;
+use SilverStripe\DMS\Model\DMSDocumentSet;
+use SilverStripe\Dev\SapphireTest;
+
+
+
 class DMSDocumentAddExistingFieldTest extends SapphireTest
 {
     /**
@@ -8,7 +20,7 @@ class DMSDocumentAddExistingFieldTest extends SapphireTest
     public function testFieldContainsTreeDropdownField()
     {
         $field = new DMSDocumentAddExistingField('Test', 'Test');
-        $this->assertContainsOnlyInstancesOf('TreeDropdownField', $field->getChildren());
+        $this->assertContainsOnlyInstancesOf(TreeDropdownField::class, $field->getChildren());
         $this->assertSame('PageSelector', $field->getChildren()->first()->getName());
     }
 

@@ -1,4 +1,19 @@
 <?php
+
+namespace SilverStripe\DMS\Tests\Model;
+
+
+
+
+
+
+use SilverStripe\DMS\Model\DMSDocument_versions;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\DMS\DMS;
+use SilverStripe\DMS\Tests\DMSFilesystemTestHelper;
+use SilverStripe\Dev\SapphireTest;
+
+
 class DMSVersioningTest extends SapphireTest
 {
     protected $usesDatabase = true;
@@ -35,7 +50,7 @@ class DMSVersioningTest extends SapphireTest
         self::$dmsEnableVersionsOld = DMSDocument_versions::$enable_versions;
         DMSDocument_versions::$enable_versions = true;
 
-        Config::inst()->update('DMS', 'folder_name', $this->testDmsPath);
+        Config::inst()->update(DMS::class, 'folder_name', $this->testDmsPath);
         DMSFilesystemTestHelper::delete($this->testDmsPath);
     }
 

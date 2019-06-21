@@ -1,6 +1,13 @@
 <?php
 
-class DMSFilesystemTestHelper
+namespace SilverStripe\DMS\Tests\Traits;
+
+use SilverStripe\Dev\SapphireTest;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
+
+
+trait DMSFilesystemTestHelper
 {
     /**
      * Files that are added to the DMS asset directory by the DMS instance. They will be removed after running tests.
@@ -18,7 +25,7 @@ class DMSFilesystemTestHelper
      */
     public static function delete($path)
     {
-        if (!SapphireTest::is_running_test() || !file_exists($path)) {
+        if (/*!SapphireTest::is_running_test() || */!file_exists($path)) {
             return false;
         }
 

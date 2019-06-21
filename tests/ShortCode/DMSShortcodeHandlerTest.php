@@ -1,4 +1,26 @@
 <?php
+
+namespace SilverStripe\DMS\Tests\ShortCode;
+
+
+
+
+
+
+
+
+
+use SilverStripe\Core\Config\Config;
+use SilverStripe\DMS\DMS;
+use SilverStripe\View\Parsers\ShortcodeParser;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\DMS\Tests\DMSFilesystemTestHelper;
+use SilverStripe\DMS\Model\DMSDocument;
+use SilverStripe\DMS\Tools\DMSShortcodeHandler;
+use SilverStripe\ErrorPage\ErrorPage;
+use SilverStripe\Dev\SapphireTest;
+
+
 /**
  * Tests DMS shortcode linking functionality.
  *
@@ -11,7 +33,7 @@ class DMSShortcodeHandlerTest extends SapphireTest
 
     public function testShortcodeOperation()
     {
-        Config::inst()->update('DMS', 'folder_name', 'assets/_unit-test-123');
+        Config::inst()->update(DMS::class, 'folder_name', 'assets/_unit-test-123');
 
         $file = 'dms/tests/DMS-test-lorum-file.pdf';
         $document = DMS::inst()->storeDocument($file);
@@ -40,7 +62,7 @@ class DMSShortcodeHandlerTest extends SapphireTest
      */
     public function testShortcodeWithContentReturnsParsedContentInLink()
     {
-        $document = $this->objFromFixture('DMSDocument', 'd1');
+        $document = $this->objFromFixture(DMSDocument::class, 'd1');
         $arguments = array('id' => $document->ID);
         $result = DMSShortcodeHandler::handle($arguments, 'Some content', ShortcodeParser::get('default'), '');
 

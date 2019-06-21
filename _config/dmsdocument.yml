@@ -2,9 +2,8 @@
 Name: dmsdocument
 After: framework/routes#coreroutes
 ---
-Director:
+SilverStripe\Control\Director:
   rules:
-    'dmsdocument/$ID' : 'DMSDocumentController'
-
-DMSDocument_versions:
+    dmsdocument/$ID: DMSDocumentController
+SilverStripe\DMS\Model\DMSDocument_versions:
   enable_versions: true

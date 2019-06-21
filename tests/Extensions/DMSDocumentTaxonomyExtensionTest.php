@@ -1,5 +1,15 @@
 <?php
 
+namespace SilverStripe\DMS\Tests\Extensions;
+
+
+
+use SilverStripe\Taxonomy\TaxonomyType;
+use SilverStripe\DMS\Extensions\DMSDocumentTaxonomyExtension;
+use SilverStripe\Dev\SapphireTest;
+
+
+
 class DMSDocumentTaxonomyExtensionTest extends SapphireTest
 {
     protected static $fixture_file = 'DMSDocumentTaxonomyExtensionTest.yml';
@@ -8,7 +18,7 @@ class DMSDocumentTaxonomyExtensionTest extends SapphireTest
     {
         parent::setUp();
 
-        if (!class_exists('TaxonomyType')) {
+        if (!class_exists(TaxonomyType::class)) {
             $this->markTestSkipped('This test requires silverstripe/taxonomy ^1.2 to be installed. Skipping.');
         }
     }

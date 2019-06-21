@@ -1,4 +1,20 @@
 <?php
+
+namespace SilverStripe\DMS\Tests;
+
+
+
+
+
+use SilverStripe\Core\Config\Config;
+use SilverStripe\DMS\DMS;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\DMS\Model\DMSDocument;
+use SilverStripe\DMS\Model\DMSDocumentSet;
+use SilverStripe\Assets\Filesystem;
+use SilverStripe\Dev\FunctionalTest;
+
+
 class DMSTest extends FunctionalTest
 {
     protected static $fixture_file = 'dmstest.yml';
@@ -31,7 +47,7 @@ class DMSTest extends FunctionalTest
     public function setUp()
     {
         parent::setUp();
-        Config::inst()->update('DMS', 'folder_name', $this->testDmsPath);
+        Config::inst()->update(DMS::class, 'folder_name', $this->testDmsPath);
         DMSFilesystemTestHelper::delete($this->testDmsPath);
         $this->dms = DMS::inst();
     }
@@ -64,7 +80,7 @@ class DMSTest extends FunctionalTest
 
     public function testDMSFolderSpanning()
     {
-        Config::inst()->update('DMS', 'folder_size', 5);
+        Config::inst()->update(DMS::class, 'folder_size', 5);
         $file = self::$testFile;
 
         $documents = array();
@@ -128,11 +144,11 @@ class DMSTest extends FunctionalTest
      */
     public function testGetByPageWithoutEmbargoes()
     {
-        $pageWithEmbargoes = $this->objFromFixture('SiteTree', 's3');
+        $pageWithEmbargoes = $this->objFromFixture(SiteTree::class, 's3');
         $documents = $this->dms->getByPage($pageWithEmbargoes);
         // Fixture: 6 documents in set, 1 is embargoed
         $this->assertCount(5, $documents, 'Embargoed documents are excluded by default');
-        $this->assertContainsOnlyInstancesOf('DMSDocument', $documents);
+        $this->assertContainsOnlyInstancesOf(DMSDocument::class, $documents);
     }
 
     /**
@@ -140,11 +156,11 @@ class DMSTest extends FunctionalTest
      */
     public function testGetByPageWithEmbargoedDocuments()
     {
-        $pageWithEmbargoes = $this->objFromFixture('SiteTree', 's3');
+        $pageWithEmbargoes = $this->objFromFixture(SiteTree::class, 's3');
         $documents = $this->dms->getByPage($pageWithEmbargoes, true);
         // Fixture: 6 documents in set, 1 is embargoed
         $this->assertCount(6, $documents, 'Embargoed documents can be included');
-        $this->assertContainsOnlyInstancesOf('DMSDocument', $documents);
+        $this->assertContainsOnlyInstancesOf(DMSDocument::class, $documents);
     }
 
     /**
@@ -152,7 +168,7 @@ class DMSTest extends FunctionalTest
      */
     public function testShortcodeHandlerKeyIsConfigurable()
     {
-        Config::inst()->update('DMS', 'shortcode_handler_key', 'testing');
+        Config::inst()->update(DMS::class, 'shortcode_handler_key', 'testing');
         $this->assertSame('testing', DMS::inst()->getShortcodeHandlerKey());
     }
 
@@ -161,10 +177,10 @@ class DMSTest extends FunctionalTest
      */
     public function testGetDocumentSetsByPage()
     {
-        $page = $this->objFromFixture('SiteTree', 's1');
+        $page = $this->objFromFixture(SiteTree::class, 's1');
         $sets = $this->dms->getDocumentSetsByPage($page);
         $this->assertCount(2, $sets);
-        $this->assertContainsOnlyInstancesOf('DMSDocumentSet', $sets);
+        $this->assertContainsOnlyInstancesOf(DMSDocumentSet::class, $sets);
     }
 
     /**

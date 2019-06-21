@@ -23,3 +23,24 @@ mappings:
   DMSDocument_Controller: SilverStripe\DMS\Control\DMSDocumentController
   DMSShortcodeHandler: SilverStripe\DMS\Tools\DMSShortcodeHandler
   ShortCodeRelationFinder: SilverStripe\DMS\Tools\ShortCodeRelationFinder
+  DMSVersioningTest: SilverStripe\DMS\Tests\Model\DMSVersioningTest
+  DMSDocumentSetTest: SilverStripe\DMS\Tests\Model\DMSDocumentSetTest
+  DMSEmbargoTest: SilverStripe\DMS\Tests\Model\DMSEmbargoTest
+  DMSDocumentTest: SilverStripe\DMS\Tests\Model\DMSDocumentTest
+  StubRelatedDocumentExtension: SilverStripe\DMS\Tests\Stub\StubRelatedDocumentExtension
+  DMSShortcodeHandlerTest: SilverStripe\DMS\Tests\ShortCode\DMSShortcodeHandlerTest
+  ShortCodeRelationFinderTest: SilverStripe\DMS\Tests\ShortCode\ShortCodeRelationFinderTest
+  DMSJsonFieldTest: SilverStripe\DMS\Tests\forms\DMSJsonFieldTest
+  MigrateToDocumentSetsTaskTest: SilverStripe\DMS\Tests\Tasks\MigrateToDocumentSetsTaskTest
+  DMSDocumentAddControllerTest: SilverStripe\DMS\Tests\Admin\DMSDocumentAddControllerTest
+  DMSGridFieldAddNewButtonTest: SilverStripe\DMS\Tests\Admin\DMSGridFieldAddNewButtonTest
+  DMSUploadField_ItemHandlerTest: SilverStripe\DMS\Tests\Admin\DMSUploadField_ItemHandlerTest
+  DMSDocumentAdminTest: SilverStripe\DMS\Tests\Admin\DMSDocumentAdminTest
+  DMSDocumentAddExistingFieldTest: SilverStripe\DMS\Tests\Admin\DMSDocumentAddExistingFieldTest
+  DMSUploadFieldTest: SilverStripe\DMS\Tests\Admin\DMSUploadFieldTest
+  DMSTest: SilverStripe\DMS\Tests\DMSTest
+  DMSTaxonomyTypeExtensionTest: SilverStripe\DMS\Tests\Extensions\DMSTaxonomyTypeExtensionTest
+  DMSSiteTreeExtensionTest: SilverStripe\DMS\Tests\Extensions\DMSSiteTreeExtensionTest
+  DMSDocumentTaxonomyExtensionTest: SilverStripe\DMS\Tests\Extensions\DMSDocumentTaxonomyExtensionTest
+  DMSFilesystemTestHelper: SilverStripe\DMS\Tests\DMSFilesystemTestHelper
+  DMSDocumentControllerTest: SilverStripe\DMS\Tests\Control\DMSDocumentControllerTest

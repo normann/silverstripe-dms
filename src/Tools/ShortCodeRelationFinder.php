@@ -6,6 +6,9 @@ use SilverStripe\ORM\DataList;
 use SilverStripe\DMS\DMS;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Dev\TestOnly;
+
 
 /**
  * Finds {@link DataObject} instances using certain shortcodes
@@ -17,7 +20,7 @@ use SilverStripe\ORM\DataObject;
  * search across dozens of columns and tables - but for a couple of hundred pages
  * and occasionally use its a feasible solution.
  */
-class ShortCodeRelationFinder
+trait ShortCodeRelationFinder
 {
 
     /**
@@ -53,13 +56,13 @@ class ShortCodeRelationFinder
     public function getList($number)
     {
         $number = (int) $number;
-        $list = DataList::create('SiteTree');
+        $list = DataList::create(SiteTree::class);
         $where = array();
-        $fields = $this->getShortCodeFields('SiteTree');
+        $fields = $this->getShortCodeFields(SiteTree::class);
         $shortcode = DMS::inst()->getShortcodeHandlerKey();
         foreach ($fields as $ancClass => $ancFields) {
             foreach ($ancFields as $ancFieldName => $ancFieldSpec) {
-                if ($ancClass != "SiteTree") {
+                if ($ancClass != SiteTree::class) {
                     $list = $list->leftJoin($ancClass, '"'.$ancClass.'"."ID" = "SiteTree"."ID"');
                 }
                 $where[] = "\"$ancClass\".\"$ancFieldName\" LIKE '%[{$shortcode},id=$number]%'"; //."%s" LIKE ""',
@@ -82,7 +85,7 @@ class ShortCodeRelationFinder
         $ancestry = array_values(ClassInfo::dataClassesFor($class));
 
         foreach ($ancestry as $ancestor) {
-            if (ClassInfo::classImplements($ancestor, 'TestOnly')) {
+            if (ClassInfo::classImplements($ancestor, TestOnly::class)) {
                 continue;
             }
 

@@ -8,6 +8,9 @@ use SilverStripe\Control\Director;
 use SilverStripe\DMS\DMS;
 use SilverStripe\Assets\File;
 use SilverStripe\ORM\DB;
+use SilverStripe\DMS\Model\DMSDocument;
+use SilverStripe\DMS\Interfaces\DMSDocumentInterface;
+
 
 
 /**
@@ -34,7 +37,7 @@ class DMSDocument_versions extends DataObject
     );
 
     private static $has_one = array(
-        'Document' => 'DMSDocument'
+        'Document' => DMSDocument::class
     );
 
     private static $defaults = array(
@@ -139,7 +142,7 @@ class DMSDocument_versions extends DataObject
     {
         //check what the constructor was passed
         $dmsObject = null;
-        if ($record && is_subclass_of($record, 'DMSDocumentInterface')) {
+        if ($record && is_subclass_of($record, DMSDocumentInterface::class)) {
             $dmsObject = $record;
             $record = null; //cancel the record creation to just create an empty object
         }

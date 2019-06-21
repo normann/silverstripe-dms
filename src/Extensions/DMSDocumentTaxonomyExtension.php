@@ -12,7 +12,7 @@ use SilverStripe\Core\Config\Config;
 class DMSDocumentTaxonomyExtension extends DataExtension
 {
     private static $many_many = array(
-        'Tags' => 'TaxonomyTerm'
+        'Tags' => TaxonomyTerm::class
     );
 
     /**
@@ -44,7 +44,7 @@ class DMSDocumentTaxonomyExtension extends DataExtension
     {
         $tags = TaxonomyTerm::get()->filter(
             'Type.Name:ExactMatch',
-            Config::inst()->get('DMSTaxonomyTypeExtension', 'default_record_name')
+            Config::inst()->get(DMSTaxonomyTypeExtension::class, 'default_record_name')
         );
 
         $map = array();

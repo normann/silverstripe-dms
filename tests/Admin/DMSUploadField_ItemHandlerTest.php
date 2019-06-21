@@ -1,5 +1,18 @@
 <?php
 
+namespace SilverStripe\DMS\Tests\Admin;
+
+
+
+
+use SilverStripe\DMS\Model\DMSDocument;
+use SilverStripe\DMS\Admin\DMSUploadField;
+use SilverStripe\DMS\Admin\DMSUploadField_ItemHandler;
+use SilverStripe\Forms\Form;
+use SilverStripe\Dev\SapphireTest;
+
+
+
 class DMSUploadField_ItemHandlerTest extends SapphireTest
 {
     protected static $fixture_file = 'dms/tests/dmstest.yml';
@@ -13,7 +26,7 @@ class DMSUploadField_ItemHandlerTest extends SapphireTest
     {
         parent::setUp();
 
-        $this->document = $this->objFromFixture('DMSDocument', 'd1');
+        $this->document = $this->objFromFixture(DMSDocument::class, 'd1');
     }
 
     public function testGetItem()
@@ -28,8 +41,8 @@ class DMSUploadField_ItemHandlerTest extends SapphireTest
         $handler = new DMSUploadField_ItemHandler(DMSUploadField::create('Test'), $this->document->ID);
         $result = $handler->EditForm();
 
-        $this->assertInstanceOf('Form', $result);
-        $this->assertInstanceOf('DMSDocument', $result->getRecord());
+        $this->assertInstanceOf(Form::class, $result);
+        $this->assertInstanceOf(DMSDocument::class, $result->getRecord());
         $this->assertSame($this->document->ID, $result->getRecord()->ID);
     }
 }
