@@ -23,7 +23,7 @@ class DMSTaxonomyTypeExtension extends DataExtension
      */
     public function requireDefaultRecords()
     {
-        $records = (array) Config::inst()->get(get_class($this), 'default_records');
+        $records = (array) Config::inst()->get(get_class($this), 'default_records_frome_xtension');
         foreach ($records as $name) {
             $type = TaxonomyType::get()->filter('Name', $name)->first();
             if (!$type) {

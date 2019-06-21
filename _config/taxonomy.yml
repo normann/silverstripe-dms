@@ -16,5 +16,5 @@ SilverStripe\DMS\Model\DMSDocument:
       filter: ExactMatchFilter
 SilverStripe\DMS\Extensions\DMSTaxonomyTypeExtension:
   default_record_name: Document
-  default_records:
+  default_records_frome_xtension:
     - Document
