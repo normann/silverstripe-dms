@@ -5,7 +5,7 @@
  */
 class DMSDocumentControllerTest extends SapphireTest
 {
-    protected static $fixture_file = 'dmstest.yml';
+    protected static $fixture_file = '../dmstest.yml';
 
     /**
      * @var DMSDocumentController

@@ -1,7 +1,7 @@
 <?php
 class DMSDocumentTest extends SapphireTest
 {
-    protected static $fixture_file = 'dmstest.yml';
+    protected static $fixture_file = '../dmstest.yml';
 
     public function testDefaultDownloadBehabiourCMSFields()
     {

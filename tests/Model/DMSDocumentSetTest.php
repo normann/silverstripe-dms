@@ -2,7 +2,7 @@
 
 class DMSDocumentSetTest extends SapphireTest
 {
-    protected static $fixture_file = 'dmstest.yml';
+    protected static $fixture_file = '../dmstest.yml';
 
     /**
      * Ensure that getDocuments is extensible
